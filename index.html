@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <script type="text/javascript" src="script.js"></script>
+  <title>OneDayPassport</title>
+</head>
+
+<body>
+  <h1>OneDayPassport申請</h1>
+  <a href="https://app.slack.com/client/T052473BFSQ/C08P18V0RT8">
+  <button  id="applyBtn" >仮申請する👆</button>
+  <button  id="applyBtn" disabled>申請する👆</button></a>
+  <h3>7:30~8:15までにご利用ください。<br>
+  8:15以降は翌日7:30までアクセスできません。</h3>
+  <!-- <script>
+    const btn = document.getElementById('applyBtn');
+ 
+    function checkTime() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+ 
+      // 「7:30 以上かつ 8:15 以下」の条件
+      const isInRange = (hours === 7 && minutes >= 30)
+        || (hours === 8 && minutes <= 15);
+ 
+      btn.disabled = !isInRange;
+    }
+ 
+    // 初期チェック
+    checkTime();
+ 
+    // 1 分ごとに再チェック
+    setInterval(checkTime, 60_000);
+  </script> -->
+  <a href="history.html">
+  <button>履歴</button>
+</a>
+
+</body>
+
+</html>
