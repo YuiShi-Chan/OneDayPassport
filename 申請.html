@@ -1,164 +1,194 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>データ送信フォーム</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f4;
-        }
-        form {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 1000px;
-        }
-        .form-group {
-            margin-bottom: 25px;
-        }
-        .row {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-        .row.small-gap {
-            gap: 10px;
-        }
-        .form-group-small {
-            flex: 1;
-            max-width: 150px;
-        }
-        .form-group-medium {
-            flex: 2;
-            max-width: 1000px;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 20px;
-        }
-        input[type="text"], textarea {
-            width: 100%;
-            padding: 14px;
-            font-size: 18px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            width: 100%;
-            padding: 20px;
-            font-size: 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>データ送信フォーム</title>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+ 
+    form {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      width: 1000px;
+    }
+ 
+    .form-group {
+      margin-bottom: 25px;
+    }
+ 
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+ 
+    .row.small-gap {
+      gap: 10px;
+    }
+ 
+    .form-group-small {
+      flex: 1;
+      max-width: 150px;
+    }
+ 
+    .form-group-medium {
+      flex: 2;
+      max-width: 1000px;
+    }
+ 
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+ 
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+ 
+    button {
+      width: 100%;
+      padding: 20px;
+      font-size: 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+ 
+    button:hover {
+      background-color: #0056b3;
+    }
+</style>
 </head>
 <body>
-    <form id="myForm">
-        <div class="row">
-            <div class="form-group-small">
-                <label for="item1">期:</label>
-                <input type="text" id="item1" inputmode="numeric" pattern="[0-9]*">
-            </div>
-            <div class="form-group-small">
-                <label for="item2">学年:</label>
-                <input type="text" id="item2">
-            </div>
-            <div class="form-group-small">
-                <label for="item3">クラス:</label>
-                <input type="text" id="item3">
-            </div>
-            <div class="form-group-small">
-                <label for="item4">番号:</label>
-                <input type="text" id="item4">
-            </div>
-        </div>
-        <div class="row small-gap">
-            <div class="form-group-medium">
-                <label for="item5">従業員番号:</label>
-                <input type="text" id="item5">
-            </div>
-            <div class="form-group-medium">
-                <label for="item6">氏名:</label>
-                <input type="text" id="item6">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="textarea1">忘れた理由:</label>
-            <textarea id="textarea1" rows="4"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="textarea2">今後の対策:</label>
-            <textarea id="textarea2" rows="4"></textarea>
-        </div>
-        <a href="file:///c%3A/Users/1615626/Desktop/DX%E6%95%99%E8%82%B2/dig-foundations/OneDayPassport/index.html">
-          <button id = "count-container" type="button" onclick="submitForm()">送信</button>  
-          </a>
-    </form>
-    <script>
-        function submitForm() {
-            const item1 = document.getElementById('item1').value;
-            const item2 = document.getElementById('item2').value;
-            const item3 = document.getElementById('item3').value;
-            const item4 = document.getElementById('item4').value;
-            const item5 = document.getElementById('item5').value;
-            const item6 = document.getElementById('item6').value;
-            const textarea1 = document.getElementById('textarea1').value;
-            const textarea2 = document.getElementById('textarea2').value;
+<form id="myForm">
+<div class="row">
+<div class="form-group-small">
+<label for="item1">期:</label>
+<input type="text" id="item1" inputmode="numeric" pattern="\d+" required>
+</div>
+<div class="form-group-small">
+<label for="item2">学年:</label>
+<input type="text" id="item2" required>
+</div>
+<div class="form-group-small">
+<label for="item3">クラス:</label>
+<input type="text" id="item3" required>
+</div>
+<div class="form-group-small">
+<label for="item4">番号:</label>
+<input type="text" id="item4" inputmode="numeric" pattern="\d+" required>
+</div>
+</div>
  
-            const formData = {
-                item1: item1,
-                item2: item2,
-                item3: item3,
-                item4: item4,
-                item5: item5,
-                item6: item6,
-                textarea1: textarea1,
-                textarea2: textarea2,
-                timestamp: new Date().toLocaleString()
-            };
+    <div class="row small-gap">
+<div class="form-group-medium">
+<label for="item5">従業員番号:</label>
+<input type="text" id="item5" inputmode="numeric" pattern="\d+" required>
+</div>
+<div class="form-group-medium">
+<label for="item6">氏名:</label>
+<input type="text" id="item6" required>
+</div>
+</div>
  
-            const existingData = JSON.parse(localStorage.getItem('formHistory')) || [];
-            existingData.push(formData);
-            localStorage.setItem('formHistory', JSON.stringify(existingData));
+    <div class="form-group">
+<label for="textarea1">忘れた理由:</label>
+<textarea id="textarea1" rows="4" required></textarea>
+</div>
  
-            alert('データが送信されました。');
-        }
-        
-function submitForm() {
- const STORAGE_KEY = 'applyCount';
- const now = new Date();
- const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-
- let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-
- if (!data.month || data.month !== currentMonth) {
-data = { month: currentMonth, count: 0 };
- }
-
- data.count++;
- localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-
- // 申請ページへ遷移（URLは適宜変更）
- window.location.href = "OneDayPassport申請ページのURL.html";
- }
-
-    </script>
-  </body>
+    <div class="form-group">
+<label for="textarea2">今後の対策:</label>
+<textarea id="textarea2" rows="4" required></textarea>
+</div>
+ 
+    <button type="button" onclick="submitForm()">送信</button>
+</form>
+ 
+  <script>
+    function submitForm() {
+      const item1 = document.getElementById('item1').value.trim();
+      const item2 = document.getElementById('item2').value.trim();
+      const item3 = document.getElementById('item3').value.trim();
+      const item4 = document.getElementById('item4').value.trim();
+      const item5 = document.getElementById('item5').value.trim();
+      const item6 = document.getElementById('item6').value.trim();
+      const textarea1 = document.getElementById('textarea1').value.trim();
+      const textarea2 = document.getElementById('textarea2').value.trim();
+ 
+      // 未入力チェック
+      if (!item1 || !item2 || !item3 || !item4 || !item5 || !item6 || !textarea1 || !textarea2) {
+        alert("すべての項目を入力してください。");
+        return;
+      }
+ 
+      // 数字欄のチェック（半角数字のみ）
+      const numericFields = [item1, item4, item5];
+      if (!numericFields.every(val => /^\d+$/.test(val))) {
+        alert("期・番号・従業員番号は半角数字で入力してください。");
+        return;
+      }
+ 
+      // クラス欄：半角英字のみ
+      if (!/^[A-Za-z]+$/.test(item3)) {
+        alert("クラスは半角英字のみで入力してください。");
+        return;
+      }
+ 
+      // 学年欄：半角数字 または「専」
+      if (!/^\d+$/.test(item2) && item2 !== "専") {
+        alert("学年は半角数字または「専」のみ入力してください。");
+        return;
+      }
+ 
+      // データ保存
+      const formData = {
+        item1, item2, item3, item4, item5, item6,
+        textarea1, textarea2,
+        timestamp: new Date().toLocaleString()
+      };
+ 
+      const existingData = JSON.parse(localStorage.getItem('formHistory')) || [];
+      existingData.push(formData);
+      localStorage.setItem('formHistory', JSON.stringify(existingData));
+ 
+      // 申請件数のカウント
+      const STORAGE_KEY = 'applyCount';
+      const now = new Date();
+      const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+      let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+ 
+      if (!data.month || data.month !== currentMonth) {
+        data = { month: currentMonth, count: 0 };
+      }
+ 
+      data.count++;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+ 
+      alert("データが送信されました。");
+ 
+      // リダイレクト（URLを環境に合わせて調整）
+      window.location.href = "file:///C:/Users/1615626/Desktop/DX教育/dig-foundations/OneDayPassport/index.html";
+    }
+</script>
+</body>
 </html>
  
