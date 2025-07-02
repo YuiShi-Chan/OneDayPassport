@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>送信履歴</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        #history {
+            width: 1000px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .history-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div id="history">
+        <h2>送信履歴</h2>
+        <div id="historyList"></div>
+    </div>
+ 
+    <script>
+        function displayHistory() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+ 
+            const formHistory = JSON.parse(localStorage.getItem('formHistory')) || [];
+ 
+            formHistory.slice().reverse().forEach(data => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `
+                    <strong>日時:</strong> ${data.timestamp}<br>
+                    <strong>期:</strong> ${data.item1}<br>
+                    <strong>学年:</strong> ${data.item2}<br>
+                    <strong>クラス:</strong> ${data.item3}<br>
+                    <strong>番号:</strong> ${data.item4}<br>
+                    <strong>従業員番号:</strong> ${data.item5}<br>
+                    <strong>名前:</strong> ${data.item6}<br>
+                    <strong>忘れた理由:</strong> ${data.textarea1}<br>
+                    <strong>今後の対策:</strong> ${data.textarea2}<br>
+                `;
+                historyList.appendChild(item);
+            });
+        }
+ 
+        window.onload = displayHistory;
+    </script>
+    <a href="file:///c%3A/Users/1615626/Desktop/DX%E6%95%99%E8%82%B2/dig-foundations/OneDayPassport/index.html">
+      <button>戻る</button></a>
+</body>
+</html>
