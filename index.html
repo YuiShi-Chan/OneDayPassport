@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
-
+ 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,22 +8,22 @@
   <script type="text/javascript" src="script.js"></script>
   <title>OneDayPassport</title>
 </head>
-
+ 
 <body>
-
+ 
   <div id="count-container">
     <span id="count">0</span><span id="label">件</span>
   </div>
   <h1>OneDayPassport申請</h1>
-  <a href="申請.html">
+  <a href="file:///c%3A/Users/1615626/Desktop/DX%E6%95%99%E8%82%B2/dig-foundations/OneDayPassport/%E7%94%B3%E8%AB%8B.html">
   <button  id="applyBtn" >仮申請する👆</button>
   <button  id="applyBtn" disabled>申請する👆</button></a>
   <h3>7:30~8:15までにご利用ください。<br>
   8:15以降は翌日7:30までアクセスできません。</h3>
-  
+ 
 <p> <a href="how-to-apply.html">申請方法はこちら</a>
 </p>
-
+ 
   <!-- <script>
     const btn = document.getElementById('applyBtn');
  
@@ -45,7 +45,7 @@
     // 1 分ごとに再チェック
     setInterval(checkTime, 60_000);
   </script> -->
-  <a href="履歴.html">
+  <a href="file:///c%3A/Users/1615626/Desktop/DX%E6%95%99%E8%82%B2/dig-foundations/OneDayPassport/%E5%B1%A5%E6%AD%B4.html">
   <button>履歴</button>
 </a>
 <script>
@@ -66,13 +66,23 @@
   }
 
   function updateDisplay(count) {
-    document.getElementById('count').textContent = count;
+    const countElement = document.getElementById('count');
+    if (countElement) {
+      countElement.textContent = count;
+    } else {
+      console.error("カウント表示要素が見つかりません。");
+    }
   }
 
-  // ページ読み込み時に表示更新
-  updateDisplay(loadCount());
+  document.addEventListener("DOMContentLoaded", () => {
+    const count = loadCount();
+    updateDisplay(count);
+  });
 </script>
 
-</body>
 
+
+ 
+</body>
+ 
 </html>
