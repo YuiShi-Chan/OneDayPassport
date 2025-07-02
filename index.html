@@ -10,12 +10,20 @@
 </head>
 
 <body>
+
+  <div id="count-container">
+    <span id="count">0</span><span id="label">件</span>
+  </div>
   <h1>OneDayPassport申請</h1>
-  <a href="https://app.slack.com/client/T052473BFSQ/C08P18V0RT8">
+  <a href="file:///c%3A/Users/1615626/Desktop/DX%E6%95%99%E8%82%B2/dig-foundations/OneDayPassport/%E7%94%B3%E8%AB%8B.html">
   <button  id="applyBtn" >仮申請する👆</button>
   <button  id="applyBtn" disabled>申請する👆</button></a>
   <h3>7:30~8:15までにご利用ください。<br>
   8:15以降は翌日7:30までアクセスできません。</h3>
+  
+<p> <a href="how-to-apply.html">申請方法はこちら</a>
+</p>
+
   <!-- <script>
     const btn = document.getElementById('applyBtn');
  
@@ -37,9 +45,33 @@
     // 1 分ごとに再チェック
     setInterval(checkTime, 60_000);
   </script> -->
-  <a href="history.html">
+  <a href="file:///c%3A/Users/1615626/Desktop/DX%E6%95%99%E8%82%B2/dig-foundations/OneDayPassport/%E5%B1%A5%E6%AD%B4.html">
   <button>履歴</button>
 </a>
+<script>
+  const STORAGE_KEY = 'applyCount';
+
+  function getCurrentMonth() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  function loadCount() {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const currentMonth = getCurrentMonth();
+    if (data.month === currentMonth) {
+      return data.count || 0;
+    }
+    return 0;
+  }
+
+  function updateDisplay(count) {
+    document.getElementById('count').textContent = count;
+  }
+
+  // ページ読み込み時に表示更新
+  updateDisplay(loadCount());
+</script>
 
 </body>
 
