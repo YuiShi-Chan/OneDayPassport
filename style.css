@@ -101,11 +101,14 @@ body {
 }
 
 .center-content {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  text-align: center;
+ transform: scale(1.1); /* 110%に拡大 */
+ transform-origin: center center;
+ background-color: #ffffff;
+ padding: 20px;
+ border-radius: 8px;
+ box-shadow: 0 0 10px rgba(0,0,0,0.1);
+ text-align: center;
+
 }
 
 #caution {
