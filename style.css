@@ -1,9 +1,132 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  text-align: center;
+  background-color: #fff;
+  padding: 80px;
+  
+margin: 0 auto;
+ padding-top: 10px;
+ padding-bottom: 10px;
+
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px;
+}
+
+h1, h3, h4, p {
+  margin-bottom: 5px;
+}
+
+#count {
+  font-size: 85px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #0814c4;
+}
+#label{
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+
+button {
+  width: 50%;
+  padding: 18px;
+  margin: 10px 0;
+  font-size: 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:enabled {
+  background-color: #0056b3;
+}
+
+a {
+  text-decoration: none;
+}
 #applyBtn{
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: auto;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #ff5722;
+  z-index: 1000;
+}
+
+h1{
+    font-size: 50px;
+}
+
+html {
+  background-color: #e0f7fa; /* 薄水色 */
+}
+
+body {
+  background-color: #cde0f6; /* 白背景（中央の表示部分） */
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center; /* 横方向中央寄せ */
+  align-items: center;     /* 縦方向中央寄せ */
+  height: 100vh;           /* 画面全体の高さを指定 */
+  background-color: #e0f7fa; /* 薄水色の背景 */
+}
+
+.center-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+#caution {
+  font-size: 13px; /* または 12px などお好みのサイズ */
+  text-align: left;
+  margin: 0 auto;
+  width: fit-content; /* 内容に合わせた幅にすることで中央表示を維持しつつ左詰めに */
+}
+
+body {
+  margin: 10px; /* ページ全体の余白を調整 */
+  padding: 0;
+}
+
+.center-content {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+h2, h4 {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
