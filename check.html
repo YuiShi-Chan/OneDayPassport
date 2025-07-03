@@ -59,36 +59,39 @@
 </head>
 <body>
   <h2>申請承認ページ</h2>
- 
+
   <!-- 🔔 通知バー -->
   <div id="notification">🔔 新しい申請が届きました。ここをクリックして更新</div>
- 
+
   <!-- 🔊 通知音 -->
   <audio id="notifySound">
-    <source src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3" type="audio/mpeg">
+    https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3
   </audio>
 
   <div id="appList"></div>
- 
+
   <script>
     const approverOptions = ["山田太郎", "鈴木次郎", "佐藤三子"];
     let lastKnownCount = (JSON.parse(localStorage.getItem("formHistory")) || []).length;
- 
+
     function loadApplications() {
       const container = document.getElementById("appList");
       container.innerHTML = "";
- 
+
       const history = JSON.parse(localStorage.getItem("formHistory")) || [];
- 
-      history.forEach((entry, index) => {
+
+      // 最新の申請が上に来るように逆順にする
+      const reversedHistory = [...history].reverse();
+
+      reversedHistory.forEach((entry, reversedIndex) => {
         const status = entry.status || "pending";
         const approver = entry.approver || "";
         const app = document.createElement("div");
         app.className = "application";
- 
+
         let statusText = "";
         let statusClass = "";
- 
+
         if (status === "approved") {
           statusText = `✅ 承認済み（${approver}）`;
           statusClass = "approved";
@@ -99,7 +102,7 @@
           statusText = "⏳ 未処理";
           statusClass = "pending";
         }
- 
+
         app.innerHTML = `
           <div class="status ${statusClass}">状態: ${statusText}</div>
           <div><strong>日時:</strong> ${entry.timestamp}</div>
@@ -112,10 +115,13 @@
           <div><strong>理由:</strong> ${entry.textarea1}</div>
           <div><strong>今後の対策:</strong> ${entry.textarea2}</div>
         `;
- 
+
         const actionDiv = document.createElement("div");
         actionDiv.className = "actions";
- 
+
+        // 元のインデックスに変換
+        const originalIndex = history.length - 1 - reversedIndex;
+
         if (status === "pending") {
           const select = document.createElement("select");
           select.className = "approver-select";
@@ -125,30 +131,30 @@
             option.textContent = name;
             select.appendChild(option);
           });
- 
+
           const approveBtn = document.createElement("button");
           approveBtn.textContent = "承認";
-          approveBtn.onclick = () => updateStatus(index, "approved", select.value);
- 
+          approveBtn.onclick = () => updateStatus(originalIndex, "approved", select.value);
+
           const rejectBtn = document.createElement("button");
           rejectBtn.textContent = "却下";
-          rejectBtn.onclick = () => updateStatus(index, "rejected", select.value);
- 
+          rejectBtn.onclick = () => updateStatus(originalIndex, "rejected", select.value);
+
           app.appendChild(select);
           actionDiv.appendChild(approveBtn);
           actionDiv.appendChild(rejectBtn);
         } else {
           const cancelBtn = document.createElement("button");
           cancelBtn.textContent = "キャンセル";
-          cancelBtn.onclick = () => updateStatus(index, "pending", "");
+          cancelBtn.onclick = () => updateStatus(originalIndex, "pending", "");
           actionDiv.appendChild(cancelBtn);
         }
- 
+
         app.appendChild(actionDiv);
         container.appendChild(app);
       });
     }
- 
+
     function updateStatus(index, status, approverName) {
       const history = JSON.parse(localStorage.getItem("formHistory")) || [];
       history[index].status = status;
@@ -157,7 +163,7 @@
       lastKnownCount = history.length;
       loadApplications();
     }
- 
+
     // 🔔 新規申請監視
     function checkForNewApplications() {
       const currentHistory = JSON.parse(localStorage.getItem("formHistory")) || [];
@@ -166,15 +172,15 @@
         document.getElementById("notifySound").play();
       }
     }
- 
+
     setInterval(checkForNewApplications, 3000);
- 
+
     document.getElementById("notification").onclick = () => {
       lastKnownCount = (JSON.parse(localStorage.getItem("formHistory")) || []).length;
       document.getElementById("notification").style.display = "none";
       loadApplications();
     };
- 
+
     window.onload = loadApplications;
   </script>
 </body>
