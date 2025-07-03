@@ -82,9 +82,23 @@ a {
  width: auto;
  padding: 8px 12px;
  font-size: 14px;
+ color: #ffffff;
  background-color: #ff5722;
  z-index: 1000;
 }
+
+#apealBtn {
+  position: fixed;
+  top: 10px;       /* ← 画面上から10px */
+  left: 10px;      /* ← 画面左から10px */
+  width: auto;
+  padding: 8px 12px;
+  color: #35b4f4;
+  font-size: 14px;
+  background-color: #ec249f8f;
+  z-index: 1000;
+}
+
 
 h1{
     font-size: 50px;
@@ -144,3 +158,4 @@ h2, h4 {
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
