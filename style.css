@@ -75,6 +75,17 @@ a {
   z-index: 1000;
 }
 
+#checkBtn {
+ position: fixed;
+ bottom: 10px;
+ left: 10px; /* ← ここを right から left に変更 */
+ width: auto;
+ padding: 8px 12px;
+ font-size: 14px;
+ background-color: #ff5722;
+ z-index: 1000;
+}
+
 h1{
     font-size: 50px;
 }
