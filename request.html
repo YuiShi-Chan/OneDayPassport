@@ -1,233 +1,195 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>データ送信フォーム</title>
-<style>
+  <meta charset="UTF-8" />
+  <title>送信履歴（月ごと・折りたたみ＋検索）</title>
+  <style>
+    html {
+      background-color: #e0f7fa; /* 薄水色 */
+    }
+ 
     body {
       font-family: Arial, sans-serif;
+      background-color: #e0f7fa; /* 薄い青（水色） */
+      margin: 0;
+      padding: 20px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       height: 100vh;
-      margin: 0;
-      background-color: #e0f7fa
+      box-sizing: border-box;
+      font-size: 18px; /* フォントサイズアップ */
     }
  
-    form {
+    #history {
+      width: 95%; /* 幅アップ */
+      max-width: 1000px;
       background-color: #fff;
-      padding: 40px;
+      padding: 25px; /* パディング増加 */
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: 1000px;
-    }
- 
-    .form-group {
-      margin-bottom: 25px;
-    }
- 
-    .row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-    }
- 
-    .row.small-gap {
-      gap: 10px;
-    }
- 
-    .form-group-small {
-      flex: 1;
-      max-width: 150px;
-    }
- 
-    .form-group-medium {
-      flex: 2;
-      max-width: 1000px;
-    }
- 
-    label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: bold;
-      font-size: 20px;
-    }
- 
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 14px;
-      font-size: 18px;
       box-sizing: border-box;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+ 
+    .month-section {
+      margin-bottom: 12px; /* 少しマージン増 */
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      box-sizing: border-box;
+    }
+ 
+    .month-header {
+      background-color: #e0e0e0;
+      padding: 14px 12px; /* パディング増加 */
+      cursor: pointer;
+      font-weight: bold;
+      border-bottom: 1px solid #ccc;
+      user-select: none;
+    }
+ 
+    .history-items {
+      display: none;
+      padding: 14px 12px; /* パディング増加 */
+      background-color: #e0e0e0; /* 折りたたみ時の背景色 */
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      box-sizing: border-box;
+    }
+ 
+    .month-section .history-items[style*="display: block"] {
+      background-color: #fff; /* 展開時は白背景 */
+    }
+ 
+    .history-item {
+      margin-bottom: 14px; /* マージン増 */
+      padding: 14px 12px; /* パディング増 */
       border: 1px solid #ccc;
       border-radius: 4px;
+      background-color: #fff;
+    }
+ 
+    #searchInput {
+      width: 450px; /* 幅アップ */
+      max-width: 100%;
+      padding: 10px 14px; /* パディング増加 */
+      margin-bottom: 24px; /* マージン増 */
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
     }
  
     button {
-      width: 50%;
-      padding: 20px;
-      font-size: 25px;
-      background-color: #007BFF;
+      margin-top: 24px; /* マージン増 */
+      padding: 14px 24px; /* パディング増 */
+      font-size: 18px;
+      background-color: #2196f3;
       color: white;
-      margin: 0 auto;
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
       cursor: pointer;
-      display: flex;
-      justify-content: center;
+      user-select: none;
+      transition: background-color 0.3s ease;
     }
  
     button:hover {
-      background-color: #0056b3;
+      background-color: #1976d2;
     }
-</style>
+ 
+    a {
+      text-decoration: none;
+    }
+  </style>
 </head>
 <body>
-<form id="myForm">
-<div class="row">
-<div class="form-group-small">
-<label for="item1">期:</label>
-<input type="text" id="item1" inputmode="numeric" pattern="\d+" required>
-</div>
-<div class="form-group-small">
-<label for="item2">学年:</label>
-<input type="text" id="item2" required>
-</div>
-<div class="form-group-small">
-<label for="item3">クラス:</label>
-<input type="text" id="item3" required>
-</div>
-<div class="form-group-small">
-<label for="item4">番号:</label>
-<input type="text" id="item4" inputmode="numeric" pattern="\d+" required>
-</div>
-</div>
+  <div id="history">
+    <h2>送信履歴（月別）</h2>
+    <input type="text" id="searchInput" placeholder="検索キーワードを入力（学年・クラス・名前）" />
+    <div id="historyList"></div>
+  </div>
  
-    <div class="row small-gap">
-<div class="form-group-medium">
-<label for="item5">従業員番号:</label>
-<input type="text" id="item5" inputmode="numeric" pattern="\d+" required>
-</div>
-<div class="form-group-medium">
-<label for="item6">氏名:</label>
-<input type="text" id="item6" required>
-</div>
-</div>
- 
-    <div class="form-group">
-<label for="textarea1">申請理由:</label>
-<textarea id="textarea1" rows="4" required></textarea>
-</div>
- 
-    <div class="form-group">
-<label for="textarea2">今後の対策:</label>
-<textarea id="textarea2" rows="4" required></textarea>
-</div>
- 
-    <button type="button" id="sendBtn" onclick="submitForm()">送信</button>
-</form>
+  <a href="index.html"><button>戻る</button></a>
  
   <script>
-    function submitForm() {
-      const item1 = document.getElementById('item1').value.trim();
-      const item2 = document.getElementById('item2').value.trim();
-      const item3 = document.getElementById('item3').value.trim();
-      const item4 = document.getElementById('item4').value.trim();
-      const item5 = document.getElementById('item5').value.trim();
-      const item6 = document.getElementById('item6').value.trim();
-      const textarea1 = document.getElementById('textarea1').value.trim();
-      const textarea2 = document.getElementById('textarea2').value.trim();
- 
-      // 未入力チェック
-      if (!item1 || !item2 || !item3 || !item4 || !item5 || !item6 || !textarea1 || !textarea2) {
-        alert("すべての項目を入力してください。");
-        return;
-      }
- 
-      // 数字欄のチェック（半角数字のみ）
-      const numericFields = [item1, item4, item5];
-      if (!numericFields.every(val => /^\d+$/.test(val))) {
-        alert("期・番号・従業員番号は半角数字で入力してください。");
-        return;
-      }
- 
-      // クラス欄：半角英字のみ
-      if (!/^[A-Za-z]+$/.test(item3)) {
-        alert("クラスは半角英字のみで入力してください。");
-        return;
-      }
- 
-      // 学年欄：半角数字 または「専」
-      if (!/^\d+$/.test(item2) && item2 !== "専") {
-        alert("学年は半角数字または「専」のみ入力してください。");
-        return;
-      }
- 
-      // データ保存
-      const formData = {
-        item1, item2, item3, item4, item5, item6,
-        textarea1, textarea2,
-        timestamp: new Date().toLocaleString()
-      };
- 
-      const existingData = JSON.parse(localStorage.getItem('formHistory')) || [];
-      existingData.push(formData);
-      localStorage.setItem('formHistory', JSON.stringify(existingData));
- 
-      // 申請件数のカウント
-      const STORAGE_KEY = 'applyCount';
-      const now = new Date();
-      const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-      let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
- 
-      if (!data.month || data.month !== currentMonth) {
-        data = { month: currentMonth, count: 0 };
-      }
- 
-      data.count++;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
- 
-      alert("データが送信されました。");
- 
-      // リダイレクト（URLを環境に合わせて調整）
-      window.location.href = "index.html";
+    // 月ごとにグループ化する関数
+    function groupByMonth(history) {
+      const grouped = {};
+      history.forEach(entry => {
+        const date = new Date(entry.timestamp);
+        const key = `${date.getFullYear()}年${String(date.getMonth() + 1).padStart(2, '0')}月`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(entry);
+      });
+      return grouped;
     }
-    function submitApplication() {
-  const history = JSON.parse(localStorage.getItem("formHistory")) || [];
-
-  const newEntry = {
-    timestamp: new Date().toLocaleString(),
-    item1: "第3期", // 例
-    item2: "2年",   // 例
-    item3: "A組",   // 例
-    item4: "12番",  // 例
-    item5: "EMP123", // 従業員番号
-    item6: "清水祐依", // 名前
-    textarea1: "理由の内容",
-    textarea2: "対策の内容",
-    status: "pending",
-    approver: ""
-  };
-
-  history.push(newEntry);
-  localStorage.setItem("formHistory", JSON.stringify(history));
-
-  // 月間申請数も更新
-  const STORAGE_KEY = 'applyCount';
-  const now = new Date();
-  const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  const countData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-
-  if (countData.month === currentMonth) {
-    countData.count = (countData.count || 0) + 1;
-  } else {
-    countData.month = currentMonth;
-    countData.count = 1;
-  }
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(countData));
-}
-
-</script>
+ 
+    // 検索ワードにマッチするか判定
+    function matchesSearch(entry, keyword) {
+      if (!keyword) return true; // 空ならすべて表示
+      const lowerKeyword = keyword.toLowerCase();
+      return (
+        (entry.item6 && entry.item6.toLowerCase().includes(lowerKeyword)) ||
+        (entry.textarea1 && entry.textarea1.toLowerCase().includes(lowerKeyword)) ||
+        (entry.textarea2 && entry.textarea2.toLowerCase().includes(lowerKeyword))
+      );
+    }
+ 
+    // 送信履歴表示
+    function displayHistory() {
+      const container = document.getElementById('historyList');
+      container.innerHTML = '';
+ 
+      const rawHistory = JSON.parse(localStorage.getItem('formHistory')) || [];
+      const keyword = document.getElementById('searchInput').value.trim();
+ 
+      const filtered = rawHistory.filter(entry => matchesSearch(entry, keyword));
+ 
+      const groupedHistory = groupByMonth(filtered.reverse());
+ 
+      for (const month in groupedHistory) {
+        const section = document.createElement('div');
+        section.className = 'month-section';
+ 
+        const header = document.createElement('div');
+        header.className = 'month-header';
+        header.textContent = `${month}（${groupedHistory[month].length}件）`;
+        header.onclick = () => {
+          const content = section.querySelector('.history-items');
+          content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        };
+ 
+        const itemsContainer = document.createElement('div');
+        itemsContainer.className = 'history-items';
+ 
+        groupedHistory[month].forEach(data => {
+          const item = document.createElement('div');
+          item.className = 'history-item';
+          item.innerHTML = `
+            <strong>日時:</strong> ${data.timestamp}<br>
+            <strong>期:</strong> ${data.item1}<br>
+            <strong>学年:</strong> ${data.item2}<br>
+            <strong>クラス:</strong> ${data.item3}<br>
+            <strong>番号:</strong> ${data.item4}<br>
+            <strong>従業員番号:</strong> ${data.item5}<br>
+            <strong>名前:</strong> ${data.item6}<br>
+            <strong>申請理由:</strong> ${data.textarea1}<br>
+            <strong>今後の対策:</strong> ${data.textarea2}<br>
+          `;
+          itemsContainer.appendChild(item);
+        });
+ 
+        section.appendChild(header);
+        section.appendChild(itemsContainer);
+        container.appendChild(section);
+      }
+    }
+ 
+    document.getElementById('searchInput').addEventListener('input', displayHistory);
+ 
+    window.onload = displayHistory;
+  </script>
 </body>
 </html>
- 
