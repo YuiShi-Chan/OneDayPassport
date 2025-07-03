@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>紹介ページ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 36px;
+      color: #333;
+    }
+
+    .section {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 100%;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #007BFF;
+    }
+
+    .section h3 {
+      font-weight: normal;
+      font-size: 18px;
+      line-height: 1.6;
+      text-align: left; /* ← 左揃えにする */
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>OneDayPassport申請システム！！！！！</h1>
+
+    <div class="section">
+      <h2>① このサイトについて</h2>
+      <h3>
+        従業員証を忘れた人に発行するOneDayPassportを申請できるシステムです！<br>
+        メインページ、申請ページ、履歴ページ、申請方法ページ、承認ページの５つで構成されています。<br>
+        7:30~8:15の間に申請し、上司に確認してもらうことができます。<br>
+        履歴では今までのデータが月ごとに確認でき、検索をかけ対象を絞ることができます。<br>
+      </h3>
+    </div>
+
+    <div class="section">
+      <h2>② こだわり・工夫</h2>
+      <h3>
+        月ごとの総貸出数が一目でわかる、使用しやすいレイアウト、色、大きさ<br>
+        入力ミスを防ぐ機能、履歴が検索できるためほしい情報を容易に手に入れられる
+      </h3>
+    </div>
+
+    <div class="section">
+      <h2>③ デジタル化の効果</h2>
+      <h3>
+        工数低減！！！<br>
+        電話する工数　2分/回　×　5回/週　×　4週　=　40分/月<br>
+        電話相手から担当上司に連絡　3分/回　×　5回/週　×　4週　=　60分/月<br>
+        申請者の説明（申請理由と対策）工数　2分/回　×　5回/週　×　4週　=　40分/月<br>
+        =>合計　140分/月　=　2.33時間/月
+      </h3>
+    </div>
+  </div>
+
+</body>
+</html>
