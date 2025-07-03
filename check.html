@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>申請承認ページ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f8e9;
+      padding: 20px;
+      font-size: 18px;
+    }
+    .application {
+      border: 1px solid #ccc;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      background-color: #ffffff;
+    }
+    .status {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .actions {
+      margin-top: 10px;
+    }
+    .actions button {
+      margin-right: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .approved {
+      color: green;
+    }
+    .rejected {
+      color: red;
+    }
+    .pending {
+      color: orange;
+    }
+    .approver-select {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    #notification {
+      display: none;
+      background-color: #ffeb3b;
+      color: #000;
+      padding: 10px 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h2>申請承認ページ</h2>
+ 
+  <!-- 🔔 通知バー -->
+  <div id="notification">🔔 新しい申請が届きました。ここをクリックして更新</div>
+ 
+  <!-- 🔊 通知音 -->
+  <audio id="notifySound">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-positive-interface-beep-221.mp3" type="audio/mpeg">
+  </audio>
+ 
+  <div id="appList"></div>
+ 
+  <script>
+    const approverOptions = ["榊原剛", "豊田章夫", "河合満"];
+    let lastKnownCount = (JSON.parse(localStorage.getItem("formHistory")) || []).length;
+ 
+    function loadApplications() {
+      const container = document.getElementById("appList");
+      container.innerHTML = "";
+ 
+      const history = JSON.parse(localStorage.getItem("formHistory")) || [];
+ 
+      history.forEach((entry, index) => {
+        const status = entry.status || "pending";
+        const approver = entry.approver || "";
+        const app = document.createElement("div");
+        app.className = "application";
+ 
+        let statusText = "";
+        let statusClass = "";
+ 
+        if (status === "approved") {
+          statusText = `✅ 承認済み（${approver}）`;
+          statusClass = "approved";
+        } else if (status === "rejected") {
+          statusText = `❌ 却下（${approver}）`;
+          statusClass = "rejected";
+        } else {
+          statusText = "⏳ 未処理";
+          statusClass = "pending";
+        }
+ 
+        app.innerHTML = `
+          <div class="status ${statusClass}">状態: ${statusText}</div>
+          <div><strong>日時:</strong> ${entry.timestamp}</div>
+          <div><strong>期:</strong> ${entry.item1}</div>
+          <div><strong>学年:</strong> ${entry.item2}</div>
+          <div><strong>クラス:</strong> ${entry.item3}</div>
+          <div><strong>番号:</strong> ${entry.item4}</div>
+          <div><strong>従業員番号:</strong> ${entry.item5}</div>
+          <div><strong>名前:</strong> ${entry.item6}</div>
+          <div><strong>理由:</strong> ${entry.textarea1}</div>
+          <div><strong>今後の対策:</strong> ${entry.textarea2}</div>
+        `;
+ 
+        const actionDiv = document.createElement("div");
+        actionDiv.className = "actions";
+ 
+        if (status === "pending") {
+          const select = document.createElement("select");
+          select.className = "approver-select";
+          approverOptions.forEach(name => {
+            const option = document.createElement("option");
+            option.value = name;
+            option.textContent = name;
+            select.appendChild(option);
+          });
+ 
+          const approveBtn = document.createElement("button");
+          approveBtn.textContent = "承認";
+          approveBtn.onclick = () => updateStatus(index, "approved", select.value);
+ 
+          const rejectBtn = document.createElement("button");
+          rejectBtn.textContent = "却下";
+          rejectBtn.onclick = () => updateStatus(index, "rejected", select.value);
+ 
+          app.appendChild(select);
+          actionDiv.appendChild(approveBtn);
+          actionDiv.appendChild(rejectBtn);
+        } else {
+          const cancelBtn = document.createElement("button");
+          cancelBtn.textContent = "キャンセル";
+          cancelBtn.onclick = () => updateStatus(index, "pending", "");
+          actionDiv.appendChild(cancelBtn);
+        }
+ 
+        app.appendChild(actionDiv);
+        container.appendChild(app);
+      });
+    }
+ 
+    function updateStatus(index, status, approverName) {
+      const history = JSON.parse(localStorage.getItem("formHistory")) || [];
+      history[index].status = status;
+      history[index].approver = approverName;
+      localStorage.setItem("formHistory", JSON.stringify(history));
+      lastKnownCount = history.length;
+      loadApplications();
+    }
+ 
+    // 🔔 新規申請監視
+    function checkForNewApplications() {
+      const currentHistory = JSON.parse(localStorage.getItem("formHistory")) || [];
+      if (currentHistory.length > lastKnownCount) {
+        document.getElementById("notification").style.display = "block";
+        document.getElementById("notifySound").play();
+      }
+    }
+ 
+    setInterval(checkForNewApplications, 3000);
+ 
+    document.getElementById("notification").onclick = () => {
+      lastKnownCount = (JSON.parse(localStorage.getItem("formHistory")) || []).length;
+      document.getElementById("notification").style.display = "none";
+      loadApplications();
+    };
+ 
+    window.onload = loadApplications;
+  </script>
+</body>
+</html>
