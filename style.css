@@ -8,17 +8,18 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .container {
   text-align: center;
   background-color: #fff;
   padding: 80px;
-  
-margin: 0 auto;
- padding-top: 10px;
- padding-bottom: 10px;
-
+  transform: scale(1.5); /* 150%に拡大 */
+  transform-origin: top center; 
+  margin: 0 auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border-radius: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 90%;
