@@ -188,6 +188,42 @@
       // リダイレクト（URLを環境に合わせて調整）
       window.location.href = "index.html";
     }
+    function submitApplication() {
+  const history = JSON.parse(localStorage.getItem("formHistory")) || [];
+
+  const newEntry = {
+    timestamp: new Date().toLocaleString(),
+    item1: "第3期", // 例
+    item2: "2年",   // 例
+    item3: "A組",   // 例
+    item4: "12番",  // 例
+    item5: "EMP123", // 従業員番号
+    item6: "清水祐依", // 名前
+    textarea1: "理由の内容",
+    textarea2: "対策の内容",
+    status: "pending",
+    approver: ""
+  };
+
+  history.push(newEntry);
+  localStorage.setItem("formHistory", JSON.stringify(history));
+
+  // 月間申請数も更新
+  const STORAGE_KEY = 'applyCount';
+  const now = new Date();
+  const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  const countData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+  if (countData.month === currentMonth) {
+    countData.count = (countData.count || 0) + 1;
+  } else {
+    countData.month = currentMonth;
+    countData.count = 1;
+  }
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(countData));
+}
+
 </script>
 </body>
 </html>
