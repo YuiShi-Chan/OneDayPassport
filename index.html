@@ -1,88 +1,74 @@
 <!DOCTYPE html>
 <html lang="ja">
- 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#000000">
-  <script type="text/javascript" src="script.js"></script>
   <title>OneDayPassport</title>
+  <link rel="stylesheet" href="style.css">
 </head>
- 
 <body>
- 
-  <div id="count-container">
-    <span id="count">0</span><span id="label">件</span>
+  <div class="container">
+    <h1>OneDayPassport申請</h1>
+    <h3>月間総貸出数</h3>
+    <div id="count-container">
+      <span id="count">0</span><span id="label">件</span>
+    </div>
+
+    <a href="request.html">
+      <button id="applyBtn">仮申請する👆</button>
+    </a>
+
+    <a href="request.html">
+      <button id="submitBtn" disabled>申請する👆</button>
+    </a>
+
+    <h3>申請ボタンは 7:30〜8:15 の間のみ有効です。</h3>
+
+    <p><a href="example.html">申請方法はこちら</a></p>
+
+    <a href="log.html">
+      <button>履歴</button>
+    </a>
   </div>
-  <h1>OneDayPassport申請</h1>
-  <a href="request.html">
-  <button  id="applyBtn" >仮申請する👆</button>
-  <button  id="applyBtn" disabled>申請する👆</button></a>
-  <h3>7:30~8:15までにご利用ください。<br>
-  8:15以降は翌日7:30までアクセスできません。</h3>
- 
-<p> <a href="example.html">申請方法はこちら</a>
-</p>
- 
-  <!-- <script>
-    const btn = document.getElementById('applyBtn');
- 
-    function checkTime() {
+
+  <script>
+    const STORAGE_KEY = 'applyCount';
+
+    function getCurrentMonth() {
       const now = new Date();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
- 
-      // 「7:30 以上かつ 8:15 以下」の条件
-      const isInRange = (hours === 7 && minutes >= 30)
-        || (hours === 8 && minutes <= 15);
- 
-      btn.disabled = !isInRange;
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     }
- 
-    // 初期チェック
-    checkTime();
- 
-    // 1 分ごとに再チェック
-    setInterval(checkTime, 60_000);
-  </script> -->
-  <a href="log.html">
-  <button>履歴</button>
-</a>
-<script>
-  const STORAGE_KEY = 'applyCount';
 
-  function getCurrentMonth() {
-    const now = new Date();
-    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-  }
-
-  function loadCount() {
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    const currentMonth = getCurrentMonth();
-    if (data.month === currentMonth) {
-      return data.count || 0;
+    function loadCount() {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      const currentMonth = getCurrentMonth();
+      return (data.month === currentMonth) ? (data.count || 0) : 0;
     }
-    return 0;
-  }
 
-  function updateDisplay(count) {
-    const countElement = document.getElementById('count');
-    if (countElement) {
-      countElement.textContent = count;
-    } else {
-      console.error("カウント表示要素が見つかりません。");
+    function updateDisplay(count) {
+      const countElement = document.getElementById('count');
+      if (countElement) {
+        countElement.textContent = count;
+      }
     }
-  }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const count = loadCount();
-    updateDisplay(count);
-  });
-</script>
+    function controlSubmitButton() {
+      const now = new Date();
+      const h = now.getHours();
+      const m = now.getMinutes();
+      const btn = document.getElementById('submitBtn');
 
+      const isEnabled = (h === 7 && m >= 30) || (h === 8 && m <= 15);
+      btn.disabled = !isEnabled;
+    }
 
+    document.addEventListener("DOMContentLoaded", () => {
+      updateDisplay(loadCount());
+      controlSubmitButton();
+    });
 
- 
+    setInterval(controlSubmitButton, 60 * 1000);
+  </script>
 </body>
- 
 </html>
